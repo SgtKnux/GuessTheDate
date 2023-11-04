@@ -44,13 +44,17 @@ const chart = new Chart(ctx, {
                 max: 9
             }
         },
-        plugins: {
-            title: {
-                display: true,
-                text: 'Bragging Rights: Guess the Date & Weight'
-            },
-            tooltip: {
+plugins: {
+        title: {
+            display: true,
+            text: 'Bragging Rights: Guess the Date & Weight'
+        },
+        tooltip: {
             callbacks: {
+                title: function(tooltipItem) {
+                    // This uses moment.js to format the date without the time
+                    return moment(tooltipItem[0].parsed.x).format('MMM D, YYYY');
+                },
                 label: function(context) {
                     var label = context.label || '';
                     if (label) {
@@ -65,7 +69,7 @@ const chart = new Chart(ctx, {
                 }
             }
         }
-        }
+    }
     }
 });
 
