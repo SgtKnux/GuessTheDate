@@ -49,20 +49,23 @@ const chart = new Chart(ctx, {
                 display: true,
                 text: 'Bragging Rights: Guess the Date & Weight'
             },
-            tooltip: {
-            callbacks: {
-                title: function(tooltipItem, data) {
-                    // Extract the date from the data and format it without the time.
-                    let date = data.datasets[tooltipItem[0].datasetIndex].data[tooltipItem[0].index].x;
-                    return moment(date).format('MMM D, YYYY');  // Display date without time
-                },
-                afterBody: function(tooltipItem, data) {
-                    // Extract the person's name from the data and display it below the main tooltip text.
-                    let person = data.datasets[tooltipItem[0].datasetIndex].data[tooltipItem[0].index].person;
-                    return 'Guessed by: ' + person;
-                }
-            }
+tooltip: {
+    callbacks: {
+        title: function(tooltipItem, data) {
+            if (tooltipItem.length === 0) return;
+            let currentItem = tooltipItem[0];
+            let date = data.datasets[currentItem.datasetIndex].data[currentItem.index].x;
+            return moment(date).format('MMM D, YYYY');
+        },
+        afterBody: function(tooltipItem, data) {
+            if (tooltipItem.length === 0) return;
+            let currentItem = tooltipItem[0];
+            let person = data.datasets[currentItem.datasetIndex].data[currentItem.index].person;
+            return 'Guessed by: ' + person;
         }
+    }
+}
+
         }
     }
 });
