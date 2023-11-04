@@ -48,7 +48,23 @@ const chart = new Chart(ctx, {
             title: {
                 display: true,
                 text: 'Bragging Rights: Guess the Date & Weight'
+            },
+            tooltip: {
+            callbacks: {
+                label: function(context) {
+                    var label = context.label || '';
+                    if (label) {
+                        label += ': ';
+                    }
+                    if (context.parsed.y !== null) {
+                        label += context.parsed.y.toFixed(2) + ' lbs';
+                    }
+                    // Add the person's name
+                    label += ' (Guessed by: ' + context.raw.person + ')';
+                    return label;
+                }
             }
+        }
         }
     }
 });
